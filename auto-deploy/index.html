@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Автоматический деплой</title>
+<style>
+  :root {
+    --bg: #f6f7fb; --card: #ffffff; --text: #141826; --muted: #5b6275;
+    --accent: #10b981; --accent-2: #6366f1; --ring: rgba(16,185,129,.18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0b0e17; --card: #131826; --text: #eef1f8; --muted: #9aa3b8; --ring: rgba(16,185,129,.25); }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    min-height: 100vh; display: grid; place-items: center; padding: 24px 16px;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: var(--text); background: var(--bg);
+    background-image:
+      radial-gradient(60rem 30rem at 10% -10%, rgba(99,102,241,.18), transparent 60%),
+      radial-gradient(50rem 30rem at 110% 110%, rgba(16,185,129,.18), transparent 60%);
+  }
+  .card {
+    width: 100%; max-width: 560px; text-align: center; background: var(--card);
+    border-radius: 24px; padding: 48px 32px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.06), 0 20px 50px -20px rgba(20,24,38,.35);
+    animation: rise .6s ease-out both;
+  }
+  .badge {
+    width: 88px; height: 88px; margin: 0 auto 28px; border-radius: 50%;
+    display: grid; place-items: center; background: var(--accent);
+    box-shadow: 0 0 0 10px var(--ring); animation: pulse 2.4s ease-in-out infinite;
+  }
+  .badge svg { width: 44px; height: 44px; stroke: #fff; stroke-width: 3; fill: none;
+    stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 40; stroke-dashoffset: 40;
+    animation: draw .7s .35s ease-out forwards; }
+  h1 {
+    margin: 0 0 12px; font-size: clamp(1.7rem, 5vw, 2.4rem); line-height: 1.15; letter-spacing: -.02em;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  p { margin: 0; color: var(--muted); font-size: 1.05rem; line-height: 1.5; }
+  .chain { margin-top: 28px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+    font-size: .9rem; color: var(--muted); }
+  .chain span { padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(127,127,127,.25); }
+  @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 18px transparent; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; }
+    .badge svg { stroke-dashoffset: 0; } }
+</style>
+</head>
+<body>
+  <main class="card">
+    <div class="badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+    <h1>Автоматический деплой работает</h1>
+    <p>Страница опубликована как Preview-деплой в Vercel.</p>
+    <div class="chain"><span>Claude Code</span><span>→</span><span>GitHub</span><span>→</span><span>Vercel</span></div>
+  </main>
+</body>
+</html>
