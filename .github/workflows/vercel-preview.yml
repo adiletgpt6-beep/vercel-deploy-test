@@ -21,6 +21,11 @@ jobs:
       - name: Install CLI
         run: npm install -g vercel@48.0.0
       - name: Deploy preview
-        run: vercel deploy --prebuilt --yes
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "VERCEL_TOKEN secret is missing"
+            exit 1
+          fi
+          vercel deploy --prebuilt --yes --token "$VERCEL_TOKEN"
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
