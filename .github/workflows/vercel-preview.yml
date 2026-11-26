@@ -1,0 +1,26 @@
+name: Test Vercel Preview
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Prepare static build
+        run: |
+          mkdir -p .vercel/output/static
+          cp index.html .vercel/output/static/
+          echo '{"version":3}' > .vercel/output/config.json
+          echo '{"projectId":"prj_Q1SIdWRALq1zL8lpB8gEk1ITo9Uy","orgId":"team_cX0n4y1GtgviL9H6lQKDYPym"}' > .vercel/project.json
+      - name: Install CLI
+        run: npm install -g vercel@48.0.0
+      - name: Deploy preview
+        run: vercel deploy --prebuilt --yes
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
